@@ -117,6 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="labelLegend.Text" xml:space="preserve">
+    <value>ADD
+NEG
+PUSH &lt;input&gt;
+POP   &lt;output&gt;
+
+&lt;input&gt;
+   IN, R1-R4 or a number
+&lt;output&gt;
+   OUT or R1-R4
+
+JMP &lt;label&gt; - Unconditional jump
+JLZ &lt;label&gt; - Jump if &lt; 0
+JEZ &lt;label&gt; - Jump if == 0
+JGZ &lt;label&gt; -  Jump if &gt; 0
+
+&lt;label&gt;
+   text:</value>
+  </data>
   <metadata name="timer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

@@ -15,10 +15,7 @@ namespace AsmTest
 				{
 					_running = value;
 					richTextBoxInstructions.ReadOnly = value;
-					if (value)
-					{
-						Init();
-					}
+					if (value) { Init(); }
 				}
 			}
 		}
@@ -34,36 +31,33 @@ namespace AsmTest
 			}
 		}
 
-		private BindingList<int> Stack = new BindingList<int>();
-		private BindingList<int> In = new BindingList<int>();
-		private BindingList<int> Out = new BindingList<int>();
-		private BindingList<string> Errors = new BindingList<string>();
-		private Lexer Lexer;
+		private BuiltProgram Program;
 
 		public MainForm()
 		{
 			InitializeComponent();
-			listBoxStack.DataSource = Stack;
-			listBoxInput.DataSource = In;
-			listBoxOutput.DataSource = Out;
-			listBoxErrors.DataSource = Errors;
-			Lexer = new Lexer(Errors);
+			Program = new BuiltProgram();
+			listBoxStack.DataSource = Program.Stack;
+			listBoxRegisters.DataSource = Program.Registers;
+			listBoxInput.DataSource = Program.Input;
+			listBoxExpected.DataSource = Program.Expected;
+			listBoxOutput.DataSource = Program.Output;
+			listBoxErrors.DataSource = Program.Errors;
 			Init();
 		}
 
 		private void Init()
 		{
-			Stack.Clear();
-			In.Clear();
-			foreach (int i in new[] { 1, 2, 3, 4, 5 }) { In.Add(i); }
-			Out.Clear();
-			Errors.Clear();
+			Program.Init(new[] { 1, 2, 3, 4, 5 }, new[] { 2, 4, 6, 8, 10 }, richTextBoxInstructions.Text);
 		}
 
-		private void buttonStop_Click(object sender, EventArgs e)
+		private void buttonStop_Click(object sender, EventArgs e) { Stop(); }
+
+		private void Stop()
 		{
 			Running = false;
 			timer.Stop();
+			Program.Reset();
 		}
 
 		private void buttonStep_Click(object sender, EventArgs e)
@@ -87,29 +81,22 @@ namespace AsmTest
 			timer.Start();
 		}
 
-		private void timer_Tick(object sender, EventArgs e)
-		{
-			Tick();
-		}
+		private void timer_Tick(object sender, EventArgs e) { Tick(); }
 
 		private void Tick()
 		{
+			bool success = Program.Tick();
+			if (success)
+			{
+				Stop();
+				MessageBox.Show("Success!");
+			}
 		}
 
 		private void richTextBoxInstructions_TextChanged(object sender, EventArgs e)
 		{
-			Build();
-			CanRun = Errors.Count == 0;
-		}
-
-		private void Build()
-		{
-			Errors.Clear();
-			var toks = Lexer.Lex(richTextBoxInstructions.Text);
-			foreach(var t in toks)
-			{
-				Errors.Add(t.Pos + " (" + t.Type + ") " + t.Val);
-			}
+			Program.Build(richTextBoxInstructions.Text);
+			CanRun = Program.CanRun;
 		}
 	}
 }

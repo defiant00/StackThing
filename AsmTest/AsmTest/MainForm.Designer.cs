@@ -29,7 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.groupBoxLegend = new System.Windows.Forms.GroupBox();
+			this.labelLegend = new System.Windows.Forms.Label();
 			this.groupBoxInstructions = new System.Windows.Forms.GroupBox();
 			this.richTextBoxInstructions = new System.Windows.Forms.RichTextBox();
 			this.groupBoxStack = new System.Windows.Forms.GroupBox();
@@ -44,27 +46,42 @@
 			this.buttonFast = new System.Windows.Forms.Button();
 			this.groupBoxErrors = new System.Windows.Forms.GroupBox();
 			this.listBoxErrors = new System.Windows.Forms.ListBox();
+			this.groupBoxRegisters = new System.Windows.Forms.GroupBox();
+			this.listBoxRegisters = new System.Windows.Forms.ListBox();
+			this.listBoxExpected = new System.Windows.Forms.ListBox();
+			this.groupBoxLegend.SuspendLayout();
 			this.groupBoxInstructions.SuspendLayout();
 			this.groupBoxStack.SuspendLayout();
 			this.groupBoxInOut.SuspendLayout();
 			this.groupBoxErrors.SuspendLayout();
+			this.groupBoxRegisters.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBoxLegend
 			// 
+			this.groupBoxLegend.Controls.Add(this.labelLegend);
 			this.groupBoxLegend.Location = new System.Drawing.Point(8, 8);
 			this.groupBoxLegend.Name = "groupBoxLegend";
-			this.groupBoxLegend.Size = new System.Drawing.Size(184, 208);
+			this.groupBoxLegend.Size = new System.Drawing.Size(184, 344);
 			this.groupBoxLegend.TabIndex = 0;
 			this.groupBoxLegend.TabStop = false;
 			this.groupBoxLegend.Text = "Legend";
+			// 
+			// labelLegend
+			// 
+			this.labelLegend.AutoSize = true;
+			this.labelLegend.Location = new System.Drawing.Point(8, 16);
+			this.labelLegend.Name = "labelLegend";
+			this.labelLegend.Size = new System.Drawing.Size(164, 221);
+			this.labelLegend.TabIndex = 0;
+			this.labelLegend.Text = resources.GetString("labelLegend.Text");
 			// 
 			// groupBoxInstructions
 			// 
 			this.groupBoxInstructions.Controls.Add(this.richTextBoxInstructions);
 			this.groupBoxInstructions.Location = new System.Drawing.Point(200, 8);
 			this.groupBoxInstructions.Name = "groupBoxInstructions";
-			this.groupBoxInstructions.Size = new System.Drawing.Size(288, 496);
+			this.groupBoxInstructions.Size = new System.Drawing.Size(224, 344);
 			this.groupBoxInstructions.TabIndex = 1;
 			this.groupBoxInstructions.TabStop = false;
 			this.groupBoxInstructions.Text = "Instructions";
@@ -74,7 +91,7 @@
 			this.richTextBoxInstructions.DetectUrls = false;
 			this.richTextBoxInstructions.Location = new System.Drawing.Point(8, 24);
 			this.richTextBoxInstructions.Name = "richTextBoxInstructions";
-			this.richTextBoxInstructions.Size = new System.Drawing.Size(272, 464);
+			this.richTextBoxInstructions.Size = new System.Drawing.Size(208, 312);
 			this.richTextBoxInstructions.TabIndex = 0;
 			this.richTextBoxInstructions.Text = "";
 			this.richTextBoxInstructions.TextChanged += new System.EventHandler(this.richTextBoxInstructions_TextChanged);
@@ -82,7 +99,7 @@
 			// groupBoxStack
 			// 
 			this.groupBoxStack.Controls.Add(this.listBoxStack);
-			this.groupBoxStack.Location = new System.Drawing.Point(528, 8);
+			this.groupBoxStack.Location = new System.Drawing.Point(432, 8);
 			this.groupBoxStack.Name = "groupBoxStack";
 			this.groupBoxStack.Size = new System.Drawing.Size(80, 480);
 			this.groupBoxStack.TabIndex = 2;
@@ -99,11 +116,12 @@
 			// 
 			// groupBoxInOut
 			// 
+			this.groupBoxInOut.Controls.Add(this.listBoxExpected);
 			this.groupBoxInOut.Controls.Add(this.listBoxOutput);
 			this.groupBoxInOut.Controls.Add(this.listBoxInput);
-			this.groupBoxInOut.Location = new System.Drawing.Point(616, 8);
+			this.groupBoxInOut.Location = new System.Drawing.Point(528, 8);
 			this.groupBoxInOut.Name = "groupBoxInOut";
-			this.groupBoxInOut.Size = new System.Drawing.Size(160, 480);
+			this.groupBoxInOut.Size = new System.Drawing.Size(248, 480);
 			this.groupBoxInOut.TabIndex = 3;
 			this.groupBoxInOut.TabStop = false;
 			this.groupBoxInOut.Text = "Input / Output";
@@ -111,7 +129,7 @@
 			// listBoxOutput
 			// 
 			this.listBoxOutput.FormattingEnabled = true;
-			this.listBoxOutput.Location = new System.Drawing.Point(88, 24);
+			this.listBoxOutput.Location = new System.Drawing.Point(176, 24);
 			this.listBoxOutput.Name = "listBoxOutput";
 			this.listBoxOutput.Size = new System.Drawing.Size(64, 446);
 			this.listBoxOutput.TabIndex = 1;
@@ -172,9 +190,9 @@
 			// groupBoxErrors
 			// 
 			this.groupBoxErrors.Controls.Add(this.listBoxErrors);
-			this.groupBoxErrors.Location = new System.Drawing.Point(8, 224);
+			this.groupBoxErrors.Location = new System.Drawing.Point(8, 360);
 			this.groupBoxErrors.Name = "groupBoxErrors";
-			this.groupBoxErrors.Size = new System.Drawing.Size(184, 280);
+			this.groupBoxErrors.Size = new System.Drawing.Size(320, 192);
 			this.groupBoxErrors.TabIndex = 8;
 			this.groupBoxErrors.TabStop = false;
 			this.groupBoxErrors.Text = "Errors";
@@ -184,14 +202,41 @@
 			this.listBoxErrors.FormattingEnabled = true;
 			this.listBoxErrors.Location = new System.Drawing.Point(8, 24);
 			this.listBoxErrors.Name = "listBoxErrors";
-			this.listBoxErrors.Size = new System.Drawing.Size(168, 238);
+			this.listBoxErrors.Size = new System.Drawing.Size(304, 160);
 			this.listBoxErrors.TabIndex = 0;
+			// 
+			// groupBoxRegisters
+			// 
+			this.groupBoxRegisters.Controls.Add(this.listBoxRegisters);
+			this.groupBoxRegisters.Location = new System.Drawing.Point(344, 360);
+			this.groupBoxRegisters.Name = "groupBoxRegisters";
+			this.groupBoxRegisters.Size = new System.Drawing.Size(80, 96);
+			this.groupBoxRegisters.TabIndex = 9;
+			this.groupBoxRegisters.TabStop = false;
+			this.groupBoxRegisters.Text = "Registers";
+			// 
+			// listBoxRegisters
+			// 
+			this.listBoxRegisters.FormattingEnabled = true;
+			this.listBoxRegisters.Location = new System.Drawing.Point(8, 16);
+			this.listBoxRegisters.Name = "listBoxRegisters";
+			this.listBoxRegisters.Size = new System.Drawing.Size(64, 69);
+			this.listBoxRegisters.TabIndex = 0;
+			// 
+			// listBoxExpected
+			// 
+			this.listBoxExpected.FormattingEnabled = true;
+			this.listBoxExpected.Location = new System.Drawing.Point(104, 24);
+			this.listBoxExpected.Name = "listBoxExpected";
+			this.listBoxExpected.Size = new System.Drawing.Size(64, 446);
+			this.listBoxExpected.TabIndex = 2;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(784, 561);
+			this.Controls.Add(this.groupBoxRegisters);
 			this.Controls.Add(this.groupBoxErrors);
 			this.Controls.Add(this.buttonFast);
 			this.Controls.Add(this.buttonRun);
@@ -205,10 +250,13 @@
 			this.MaximizeBox = false;
 			this.Name = "MainForm";
 			this.Text = "Stack Asm Thing";
+			this.groupBoxLegend.ResumeLayout(false);
+			this.groupBoxLegend.PerformLayout();
 			this.groupBoxInstructions.ResumeLayout(false);
 			this.groupBoxStack.ResumeLayout(false);
 			this.groupBoxInOut.ResumeLayout(false);
 			this.groupBoxErrors.ResumeLayout(false);
+			this.groupBoxRegisters.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -230,6 +278,10 @@
 		private System.Windows.Forms.Button buttonFast;
 		private System.Windows.Forms.GroupBox groupBoxErrors;
 		private System.Windows.Forms.ListBox listBoxErrors;
+		private System.Windows.Forms.GroupBox groupBoxRegisters;
+		private System.Windows.Forms.ListBox listBoxRegisters;
+		private System.Windows.Forms.Label labelLegend;
+		private System.Windows.Forms.ListBox listBoxExpected;
 	}
 }
 
