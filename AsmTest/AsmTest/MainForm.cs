@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace AsmTest
@@ -16,16 +17,47 @@ namespace AsmTest
 					richTextBoxInstructions.ReadOnly = value;
 					if (value)
 					{
-						listBoxStack.Items.Clear();
+						Init();
 					}
 				}
 			}
 		}
 		private bool _running = false;
 
+		private bool CanRun
+		{
+			set
+			{
+				buttonStep.Enabled = value;
+				buttonRun.Enabled = value;
+				buttonFast.Enabled = value;
+			}
+		}
+
+		private BindingList<int> Stack = new BindingList<int>();
+		private BindingList<int> In = new BindingList<int>();
+		private BindingList<int> Out = new BindingList<int>();
+		private BindingList<string> Errors = new BindingList<string>();
+		private Lexer Lexer;
+
 		public MainForm()
 		{
 			InitializeComponent();
+			listBoxStack.DataSource = Stack;
+			listBoxInput.DataSource = In;
+			listBoxOutput.DataSource = Out;
+			listBoxErrors.DataSource = Errors;
+			Lexer = new Lexer(Errors);
+			Init();
+		}
+
+		private void Init()
+		{
+			Stack.Clear();
+			In.Clear();
+			foreach (int i in new[] { 1, 2, 3, 4, 5 }) { In.Add(i); }
+			Out.Clear();
+			Errors.Clear();
 		}
 
 		private void buttonStop_Click(object sender, EventArgs e)
@@ -62,7 +94,22 @@ namespace AsmTest
 
 		private void Tick()
 		{
-			listBoxStack.Items.Add(listBoxStack.Items.Count);
+		}
+
+		private void richTextBoxInstructions_TextChanged(object sender, EventArgs e)
+		{
+			Build();
+			CanRun = Errors.Count == 0;
+		}
+
+		private void Build()
+		{
+			Errors.Clear();
+			var toks = Lexer.Lex(richTextBoxInstructions.Text);
+			foreach(var t in toks)
+			{
+				Errors.Add(t.Pos + " (" + t.Type + ") " + t.Val);
+			}
 		}
 	}
 }

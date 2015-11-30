@@ -42,16 +42,19 @@
 			this.buttonRun = new System.Windows.Forms.Button();
 			this.timer = new System.Windows.Forms.Timer(this.components);
 			this.buttonFast = new System.Windows.Forms.Button();
+			this.groupBoxErrors = new System.Windows.Forms.GroupBox();
+			this.listBoxErrors = new System.Windows.Forms.ListBox();
 			this.groupBoxInstructions.SuspendLayout();
 			this.groupBoxStack.SuspendLayout();
 			this.groupBoxInOut.SuspendLayout();
+			this.groupBoxErrors.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBoxLegend
 			// 
 			this.groupBoxLegend.Location = new System.Drawing.Point(8, 8);
 			this.groupBoxLegend.Name = "groupBoxLegend";
-			this.groupBoxLegend.Size = new System.Drawing.Size(184, 496);
+			this.groupBoxLegend.Size = new System.Drawing.Size(184, 208);
 			this.groupBoxLegend.TabIndex = 0;
 			this.groupBoxLegend.TabStop = false;
 			this.groupBoxLegend.Text = "Legend";
@@ -74,6 +77,7 @@
 			this.richTextBoxInstructions.Size = new System.Drawing.Size(272, 464);
 			this.richTextBoxInstructions.TabIndex = 0;
 			this.richTextBoxInstructions.Text = "";
+			this.richTextBoxInstructions.TextChanged += new System.EventHandler(this.richTextBoxInstructions_TextChanged);
 			// 
 			// groupBoxStack
 			// 
@@ -165,11 +169,30 @@
 			this.buttonFast.UseVisualStyleBackColor = true;
 			this.buttonFast.Click += new System.EventHandler(this.buttonFast_Click);
 			// 
+			// groupBoxErrors
+			// 
+			this.groupBoxErrors.Controls.Add(this.listBoxErrors);
+			this.groupBoxErrors.Location = new System.Drawing.Point(8, 224);
+			this.groupBoxErrors.Name = "groupBoxErrors";
+			this.groupBoxErrors.Size = new System.Drawing.Size(184, 280);
+			this.groupBoxErrors.TabIndex = 8;
+			this.groupBoxErrors.TabStop = false;
+			this.groupBoxErrors.Text = "Errors";
+			// 
+			// listBoxErrors
+			// 
+			this.listBoxErrors.FormattingEnabled = true;
+			this.listBoxErrors.Location = new System.Drawing.Point(8, 24);
+			this.listBoxErrors.Name = "listBoxErrors";
+			this.listBoxErrors.Size = new System.Drawing.Size(168, 238);
+			this.listBoxErrors.TabIndex = 0;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(784, 561);
+			this.Controls.Add(this.groupBoxErrors);
 			this.Controls.Add(this.buttonFast);
 			this.Controls.Add(this.buttonRun);
 			this.Controls.Add(this.buttonStep);
@@ -185,6 +208,7 @@
 			this.groupBoxInstructions.ResumeLayout(false);
 			this.groupBoxStack.ResumeLayout(false);
 			this.groupBoxInOut.ResumeLayout(false);
+			this.groupBoxErrors.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -204,6 +228,8 @@
 		private System.Windows.Forms.Button buttonRun;
 		private System.Windows.Forms.Timer timer;
 		private System.Windows.Forms.Button buttonFast;
+		private System.Windows.Forms.GroupBox groupBoxErrors;
+		private System.Windows.Forms.ListBox listBoxErrors;
 	}
 }
 
