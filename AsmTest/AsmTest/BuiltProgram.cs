@@ -4,10 +4,18 @@ using System.ComponentModel;
 
 namespace AsmTest
 {
+	public enum Status
+	{
+		Running,
+		Success,
+		Error
+	}
+
 	public class BuiltProgram
 	{
 		public BindingList<int> Stack, Registers, Input, Expected, Output;
 		public BindingList<Error> Errors;
+		public Status Status;
 		private Parser Parser;
 		private int InputCounter, ProgramCounter;
 		private List<Command> Commands;
@@ -24,6 +32,7 @@ namespace AsmTest
 			Output.Clear();
 			foreach (int i in input) { Input.Add(i); }
 			foreach (int i in expected) { Expected.Add(i); }
+			Status = Status.Running;
 			Build(inputText);
 		}
 
@@ -51,9 +60,11 @@ namespace AsmTest
 			Reset();
 		}
 
-		public bool Tick()
+		public void Tick()
 		{
 			ExecuteCurrent();
+
+			if (Errors.Count > 0) { Status = Status.Error; }
 
 			bool eq = true;
 			if (Expected.Count == Output.Count)
@@ -64,7 +75,8 @@ namespace AsmTest
 				}
 			}
 			else { eq = false; }
-			return eq;
+
+			if (eq) { Status = Status.Success; }
 		}
 
 		private int Pop()

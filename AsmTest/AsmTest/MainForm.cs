@@ -85,11 +85,14 @@ namespace AsmTest
 
 		private void Tick()
 		{
-			bool success = Program.Tick();
-			if (success)
+			Program.Tick();
+			if (Program.Status != Status.Running)
 			{
 				Stop();
-				MessageBox.Show("Success!");
+				if (Program.Status == Status.Success)
+				{
+					MessageBox.Show("Success!");
+				}
 			}
 		}
 
