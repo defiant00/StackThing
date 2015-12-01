@@ -115,6 +115,7 @@ namespace AsmTest
 		commands_start,
 		noargs_start,
 		Add,
+		Duplicate,
 		Negate,
 		noargs_end,
 		Pop,
@@ -130,6 +131,7 @@ namespace AsmTest
 		Number,
 		Input,
 		outputs_start,
+		Nil,
 		Register1,
 		Register2,
 		Register3,
@@ -154,8 +156,7 @@ namespace AsmTest
 		public Token(TokenType type, Position pos, string val, BindingList<Error> errors)
 		{
 			Type = type;
-			string lVal = val.ToLower();
-			if (Keywords.ContainsKey(lVal)) { Type = Keywords[lVal]; }
+			if (Keywords.ContainsKey(val)) { Type = Keywords[val]; }
 			if (type == TokenType.Label && Type != TokenType.Label)
 			{
 				errors.Add(new Error("Cannot use '" + val + "' as a label", pos));
@@ -166,20 +167,22 @@ namespace AsmTest
 
 		public readonly static Dictionary<string, TokenType> Keywords = new Dictionary<string, TokenType>
 		{
-			{"add",     TokenType.Add},
-			{"in",      TokenType.Input},
-			{"jmp",     TokenType.Jump},
-			{"jlz",     TokenType.JumpLessThanZero},
-			{"jez",     TokenType.JumpEqualsZero},
-			{"jgz",     TokenType.JumpGreaterThanZero},
-			{"neg",     TokenType.Negate},
-			{"out",     TokenType.Output},
-			{"pop",     TokenType.Pop},
-			{"push",    TokenType.Push},
-			{"r1",      TokenType.Register1},
-			{"r2",      TokenType.Register2},
-			{"r3",      TokenType.Register3},
-			{"r4",      TokenType.Register4},
+			{"ADD",     TokenType.Add},
+			{"DUP",     TokenType.Duplicate},
+			{"IN",      TokenType.Input},
+			{"JMP",     TokenType.Jump},
+			{"JLZ",     TokenType.JumpLessThanZero},
+			{"JEZ",     TokenType.JumpEqualsZero},
+			{"JGZ",     TokenType.JumpGreaterThanZero},
+			{"NEG",     TokenType.Negate},
+			{"OUT",     TokenType.Output},
+			{"POP",     TokenType.Pop},
+			{"PUSH",    TokenType.Push},
+			{"NIL",     TokenType.Nil},
+			{"R1",      TokenType.Register1},
+			{"R2",      TokenType.Register2},
+			{"R3",      TokenType.Register3},
+			{"R4",      TokenType.Register4},
 		};
 	}
 

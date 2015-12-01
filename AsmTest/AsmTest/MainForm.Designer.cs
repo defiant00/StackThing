@@ -37,6 +37,7 @@
 			this.groupBoxStack = new System.Windows.Forms.GroupBox();
 			this.listBoxStack = new System.Windows.Forms.ListBox();
 			this.groupBoxInOut = new System.Windows.Forms.GroupBox();
+			this.listBoxExpected = new System.Windows.Forms.ListBox();
 			this.listBoxOutput = new System.Windows.Forms.ListBox();
 			this.listBoxInput = new System.Windows.Forms.ListBox();
 			this.buttonStop = new System.Windows.Forms.Button();
@@ -48,7 +49,6 @@
 			this.listBoxErrors = new System.Windows.Forms.ListBox();
 			this.groupBoxRegisters = new System.Windows.Forms.GroupBox();
 			this.listBoxRegisters = new System.Windows.Forms.ListBox();
-			this.listBoxExpected = new System.Windows.Forms.ListBox();
 			this.groupBoxLegend.SuspendLayout();
 			this.groupBoxInstructions.SuspendLayout();
 			this.groupBoxStack.SuspendLayout();
@@ -72,7 +72,7 @@
 			this.labelLegend.AutoSize = true;
 			this.labelLegend.Location = new System.Drawing.Point(8, 16);
 			this.labelLegend.Name = "labelLegend";
-			this.labelLegend.Size = new System.Drawing.Size(164, 221);
+			this.labelLegend.Size = new System.Drawing.Size(164, 234);
 			this.labelLegend.TabIndex = 0;
 			this.labelLegend.Text = resources.GetString("labelLegend.Text");
 			// 
@@ -125,6 +125,14 @@
 			this.groupBoxInOut.TabIndex = 3;
 			this.groupBoxInOut.TabStop = false;
 			this.groupBoxInOut.Text = "Input / Output";
+			// 
+			// listBoxExpected
+			// 
+			this.listBoxExpected.FormattingEnabled = true;
+			this.listBoxExpected.Location = new System.Drawing.Point(104, 24);
+			this.listBoxExpected.Name = "listBoxExpected";
+			this.listBoxExpected.Size = new System.Drawing.Size(64, 446);
+			this.listBoxExpected.TabIndex = 2;
 			// 
 			// listBoxOutput
 			// 
@@ -222,14 +230,6 @@
 			this.listBoxRegisters.Name = "listBoxRegisters";
 			this.listBoxRegisters.Size = new System.Drawing.Size(64, 69);
 			this.listBoxRegisters.TabIndex = 0;
-			// 
-			// listBoxExpected
-			// 
-			this.listBoxExpected.FormattingEnabled = true;
-			this.listBoxExpected.Location = new System.Drawing.Point(104, 24);
-			this.listBoxExpected.Name = "listBoxExpected";
-			this.listBoxExpected.Size = new System.Drawing.Size(64, 446);
-			this.listBoxExpected.TabIndex = 2;
 			// 
 			// MainForm
 			// 

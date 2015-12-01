@@ -22,6 +22,9 @@ namespace AsmTest
 
 		public bool CanRun { get { return Errors.Count == 0; } }
 
+		private bool InputAvailable { get { return InputCounter < Input.Count; } }
+		private int NextInput { get { return Input[InputCounter++]; } }
+
 		public void Init(IEnumerable<int> input, IEnumerable<int> expected, string inputText)
 		{
 			Stack.Clear();
@@ -56,7 +59,7 @@ namespace AsmTest
 		public void Build(string input)
 		{
 			Errors.Clear();
-			Commands = Parser.Parse(input);
+			Commands = Parser.Parse(input.ToUpper());
 			Reset();
 		}
 
@@ -79,11 +82,27 @@ namespace AsmTest
 			if (eq) { Status = Status.Success; }
 		}
 
+		private int Peek { get { return Stack[Stack.Count - 1]; } }
+
 		private int Pop()
 		{
 			int val = Stack[Stack.Count - 1];
 			Stack.RemoveAt(Stack.Count - 1);
 			return val;
+		}
+
+		private void JumpToLabel(Token arg)
+		{
+			for (int i = 0; i < Commands.Count; i++)
+			{
+				if (Commands[i].Labels.Contains(arg.Val))
+				{
+					ProgramCounter = i;
+					return;
+				}
+			}
+			Errors.Add(new Error("Couldn't locate label '" + arg.Val + "' while running", arg.Pos));
+			ProgramCounter--;
 		}
 
 		private void ExecuteCurrent()
@@ -106,6 +125,15 @@ namespace AsmTest
 						ProgramCounter--;
 					}
 				}
+				else if (cmd.Type.Type == TokenType.Duplicate)
+				{
+					if (Stack.Count > 0) { Stack.Add(Peek); }
+					else
+					{
+						Errors.Add(new Error("Duplicate requires a value", cmd.Type.Pos));
+						ProgramCounter--;
+					}
+				}
 				else if (cmd.Type.Type == TokenType.Negate)
 				{
 					if (Stack.Count > 0) { Stack.Add(-Pop()); }
@@ -119,8 +147,16 @@ namespace AsmTest
 				{
 					switch (cmd.Arg.Type)
 					{
+						case TokenType.Nil:
+							Stack.Add(0);
+							break;
 						case TokenType.Input:
-							// TODO - Read from input.
+							if (InputAvailable) { Stack.Add(NextInput); }
+							else
+							{
+								Errors.Add(new Error("Input is empty", cmd.Arg.Pos));
+								ProgramCounter--;
+							}
 							break;
 						case TokenType.Register1:
 							Stack.Add(Registers[0]);
@@ -139,6 +175,7 @@ namespace AsmTest
 							break;
 						default:
 							Errors.Add(new Error(cmd.Arg.Type + " is not valid for a Push", cmd.Arg.Pos));
+							ProgramCounter--;
 							break;
 					}
 				}
@@ -148,6 +185,9 @@ namespace AsmTest
 					{
 						switch (cmd.Arg.Type)
 						{
+							case TokenType.Nil:
+								Pop();
+								break;
 							case TokenType.Output:
 								Output.Add(Pop());
 								break;
@@ -176,7 +216,27 @@ namespace AsmTest
 				}
 				else if (cmd.Type.IsJump)
 				{
-					// TODO - Jumps
+					if (cmd.Type.Type == TokenType.Jump) { JumpToLabel(cmd.Arg); }
+					else if (Stack.Count > 0)
+					{
+						switch (cmd.Type.Type)
+						{
+							case TokenType.JumpLessThanZero:
+								if (Peek < 0) { JumpToLabel(cmd.Arg); }
+								break;
+							case TokenType.JumpEqualsZero:
+								if (Peek == 0) { JumpToLabel(cmd.Arg); }
+								break;
+							case TokenType.JumpGreaterThanZero:
+								if (Peek > 0) { JumpToLabel(cmd.Arg); }
+								break;
+						}
+					}
+					else
+					{
+						Errors.Add(new Error("Conditional jumps require a value", cmd.Type.Pos));
+						ProgramCounter--;
+					}
 				}
 				else { Errors.Add(new Error(cmd.Type.Type + " is not known", cmd.Type.Pos)); }
 

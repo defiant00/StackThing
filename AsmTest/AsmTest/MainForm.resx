@@ -119,14 +119,15 @@
   </resheader>
   <data name="labelLegend.Text" xml:space="preserve">
     <value>ADD
+DUP
 NEG
 PUSH &lt;input&gt;
 POP   &lt;output&gt;
 
 &lt;input&gt;
-   IN, R1-R4 or a number
+   IN, R1-R4, NIL (0) or a number
 &lt;output&gt;
-   OUT or R1-R4
+   OUT, R1-R4 or NIL (discard)
 
 JMP &lt;label&gt; - Unconditional jump
 JLZ &lt;label&gt; - Jump if &lt; 0
